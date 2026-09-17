@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PERSONAL DIARY</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- global diagonal wipe transition overlay -->
+<div id="wipe" class="wipe">
+  <div class="wipe-panel wipe-panel--a"></div>
+  <div class="wipe-panel wipe-panel--b"></div>
+</div>
+
+<!-- ambient background motif -->
+<div class="bg-motif" aria-hidden="true">
+  <div class="bg-slash bg-slash--1"></div>
+  <div class="bg-slash bg-slash--2"></div>
+  <div class="bg-slash bg-slash--3"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<main id="app">
+
+  <!-- ===================== BOOT SPLASH ===================== -->
+  <section class="screen screen--boot" data-screen="boot">
+    <div class="boot-flash"></div>
+    <div class="boot-mark">
+      <div class="boot-mark__bar"></div>
+      <h1 class="boot-title">
+        <span class="boot-title__line">PERSONAL</span>
+        <span class="boot-title__line boot-title__line--accent">DIARY</span>
+      </h1>
+      <div class="boot-mark__bar boot-mark__bar--bottom"></div>
+      <p class="boot-sub">RECORD OF DAYS</p>
+    </div>
+  </section>
+
+  <!-- ===================== PASSWORD / LOCK ===================== -->
+  <section class="screen screen--auth" data-screen="auth">
+    <div class="shimmer-panel"></div>
+    <div class="watermark">DIARY</div>
+
+    <div class="auth-box">
+      <p class="eyebrow" id="auth-eyebrow">ENTER PASSWORD</p>
+      <h2 class="auth-title" id="auth-title">Welcome Back</h2>
+
+      <form id="auth-form" class="auth-form" autocomplete="off">
+        <label class="field">
+          <span class="field__label">PASSWORD</span>
+          <input type="password" id="auth-password" class="field__input" autocomplete="off" />
+        </label>
+        <label class="field" id="auth-confirm-wrap" hidden>
+          <span class="field__label">CONFIRM PASSWORD</span>
+          <input type="password" id="auth-confirm" class="field__input" autocomplete="off" />
+        </label>
+        <p class="auth-error" id="auth-error"></p>
+        <button type="submit" class="btn btn--primary" id="auth-submit">UNLOCK</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN MENU ===================== -->
+  <section class="screen screen--menu" data-screen="menu">
+    <div class="shimmer-panel"></div>
+    <div class="watermark">RECORD</div>
+    <div class="menu-frame">
+      <header class="menu-header">
+        <p class="menu-header__eyebrow">MAIN MENU</p>
+        <h1 class="menu-header__title">PERSONAL DIARY</h1>
+        <p class="menu-header__date" id="menu-date"></p>
+      </header>
+
+      <nav class="menu-list" id="menu-list">
+        <button class="menu-item" data-target="new-entry" style="--i:0">
+          <span class="menu-item__index">01</span>
+          <span class="menu-item__label">NEW ENTRY</span>
+          <span class="menu-item__hint">Write today into the record</span>
+        </button>
+        <button class="menu-item" data-target="journal" style="--i:1">
+          <span class="menu-item__index">02</span>
+          <span class="menu-item__label">JOURNAL</span>
+          <span class="menu-item__hint">Browse, edit, delete past entries</span>
+        </button>
+        <button class="menu-item" data-target="settings" style="--i:2">
+          <span class="menu-item__index">03</span>
+          <span class="menu-item__label">SETTINGS</span>
+          <span class="menu-item__hint">Change your password</span>
+        </button>
+        <button class="menu-item" data-target="lock" style="--i:3">
+          <span class="menu-item__index">04</span>
+          <span class="menu-item__label">LOCK</span>
+          <span class="menu-item__hint">Return to password screen</span>
+        </button>
+      </nav>
+
+      <footer class="menu-footer">
+        <span>&#8593;&#8595; NAVIGATE</span>
+        <span>ENTER SELECT</span>
+        <span>ESC BACK</span>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ===================== NEW ENTRY ===================== -->
+  <section class="screen screen--sub" data-screen="new-entry">
+    <div class="shimmer-panel"></div>
+    <div class="watermark">WRITE</div>
+    <header class="sub-header">
+      <button class="back-btn" data-back>&#8592; BACK</button>
+      <p class="sub-header__eyebrow">01 / NEW ENTRY</p>
+      <h2 class="sub-header__title">Write It Down</h2>
+    </header>
+
+    <form id="entry-form" class="entry-form">
+      <div class="entry-grid">
+        <label class="field">
+          <span class="field__label">DATE</span>
+          <input type="date" id="entry-date" class="field__input" required />
+        </label>
+        <label class="field">
+          <span class="field__label">TIME</span>
+          <input type="time" id="entry-time" class="field__input" required />
+        </label>
+        <label class="field field--wide">
+          <span class="field__label">TITLE</span>
+          <input type="text" id="entry-title" class="field__input" placeholder="What happened" maxlength="60" />
+        </label>
+        <label class="field">
+          <span class="field__label">PLACE</span>
+          <input type="text" id="entry-place" class="field__input" placeholder="Where" maxlength="60" />
+        </label>
+        <label class="field">
+          <span class="field__label">DURATION</span>
+          <input type="text" id="entry-duration" class="field__input" placeholder="e.g. 2h" maxlength="20" />
+        </label>
+        <label class="field field--wide">
+          <span class="field__label">NOTE</span>
+          <textarea id="entry-note" class="field__input field__input--area" rows="6" placeholder="Tell it in full..."></textarea>
+        </label>
+      </div>
+      <p class="form-status" id="entry-status"></p>
+      <button type="submit" class="btn btn--primary">SAVE ENTRY</button>
+    </form>
+  </section>
+
+  <!-- ===================== JOURNAL (browse / edit / delete) ===================== -->
+  <section class="screen screen--sub screen--journal" data-screen="journal">
+    <div class="shimmer-panel"></div>
+    <div class="watermark">JOURNAL</div>
+    <header class="sub-header">
+      <button class="back-btn" data-back>&#8592; BACK</button>
+      <p class="sub-header__eyebrow">02 / JOURNAL</p>
+      <h2 class="sub-header__title">The Record</h2>
+    </header>
+
+    <div class="journal-layout">
+      <aside class="journal-dates">
+        <p class="journal-dates__label">DATES</p>
+        <div id="journal-date-list" class="journal-date-list"></div>
+      </aside>
+
+      <div class="journal-entries">
+        <p class="journal-entries__label" id="journal-selected-date">SELECT A DATE</p>
+        <div id="journal-entry-list" class="journal-entry-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SETTINGS ===================== -->
+  <section class="screen screen--sub" data-screen="settings">
+    <div class="shimmer-panel"></div>
+    <div class="watermark">CONFIG</div>
+    <header class="sub-header">
+      <button class="back-btn" data-back>&#8592; BACK</button>
+      <p class="sub-header__eyebrow">03 / SETTINGS</p>
+      <h2 class="sub-header__title">Change Password</h2>
+    </header>
+
+    <form id="settings-form" class="auth-form settings-form">
+      <label class="field">
+        <span class="field__label">CURRENT PASSWORD</span>
+        <input type="password" id="settings-old" class="field__input" autocomplete="off" />
+      </label>
+      <label class="field">
+        <span class="field__label">NEW PASSWORD</span>
+        <input type="password" id="settings-new" class="field__input" autocomplete="off" />
+      </label>
+      <label class="field">
+        <span class="field__label">CONFIRM NEW PASSWORD</span>
+        <input type="password" id="settings-confirm" class="field__input" autocomplete="off" />
+      </label>
+      <p class="form-status" id="settings-status"></p>
+      <button type="submit" class="btn btn--primary">UPDATE PASSWORD</button>
+    </form>
+  </section>
+
+</main>
+
+<!-- entry detail / edit overlay: lives at the top level, not inside a .screen,
+     so it is never clipped by a screen's scroll or hidden by screen switching -->
+<div class="entry-detail" id="entry-detail" hidden>
+  <div class="entry-detail__panel">
+    <div class="shimmer-panel"></div>
+    <button class="close-btn" id="entry-detail-close">&times;</button>
+    <div id="entry-detail-view"></div>
+    <form id="entry-detail-edit-form" class="entry-form" hidden>
+      <div class="entry-grid">
+        <label class="field">
+          <span class="field__label">TIME</span>
+          <input type="time" id="edit-time" class="field__input" required />
+        </label>
+        <label class="field field--wide">
+          <span class="field__label">TITLE</span>
+          <input type="text" id="edit-title" class="field__input" maxlength="60" />
+        </label>
+        <label class="field">
+          <span class="field__label">PLACE</span>
+          <input type="text" id="edit-place" class="field__input" maxlength="60" />
+        </label>
+        <label class="field">
+          <span class="field__label">DURATION</span>
+          <input type="text" id="edit-duration" class="field__input" maxlength="20" />
+        </label>
+        <label class="field field--wide">
+          <span class="field__label">NOTE</span>
+          <textarea id="edit-note" class="field__input field__input--area" rows="6"></textarea>
+        </label>
+      </div>
+      <button type="submit" class="btn btn--primary">SAVE CHANGES</button>
+    </form>
+    <div class="entry-detail__actions" id="entry-detail-actions">
+      <button class="btn btn--ghost" id="entry-detail-edit-btn">EDIT</button>
+      <button class="btn btn--danger" id="entry-detail-delete-btn">DELETE</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
